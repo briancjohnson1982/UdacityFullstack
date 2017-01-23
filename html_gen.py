@@ -2,7 +2,7 @@ import webbrowser
 import os
 
 
-# This file is based on ... TODO: finish heaer comments
+# This file is a modification of
 
 # Styles and scripting for the page
 main_page_head = '''
@@ -78,13 +78,13 @@ main_page_content = '''
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">Fresh Tomatoes Movie Trailers</a>
+            <a class="navbar-brand" href="#">My Movies</a>
           </div>
         </div>
       </div>
     </div>
-    <div class="container">
-      {movie_tiles}
+    <div class="flex-container">
+        {movie_tiles}
     </div>
   </body>
 </html>
@@ -94,9 +94,16 @@ main_page_content = '''
 # A single movie entry html template
 movie_tile_content = '''
 <div class="col-md-6 col-lg-4 movie-tile text-center" data-omdb-request-string ="{omdb_api_string}" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" class="poster">
-    <h2>{movie_title}</h2>
+    <div class="movie-title">
+        <h2>{movie_title}</h2>
+    </div>
+    <hr>
+    <div class="poster-image">
+        <img src="{poster_image_url}">
+    </div>
+    
 </div>
+
 '''
 
 
@@ -119,7 +126,7 @@ def create_movie_tiles_content(movies):
 
 def open_movies_page(movies):
     # Create or overwrite the output file
-    output_file = open('fresh_tomatoes.html', 'w')
+    output_file = open('my_movies.html', 'w')
 
     # Replace the movie tiles placeholder generated content
     rendered_content = main_page_content.format(
