@@ -4,53 +4,67 @@ import json
 
 class Movie():
 
-    DEBUG = True
-    
-    def __init__(self, title_string, trailer_youtube_url):
-        movie_data = self.get_json(title_string)
-        self.title = movie_data["Title"]
-        self.movie_plot = movie_data["Plot"]
-        self.rating = movie_data["Rated"]
-        self.release_date = movie_data["Released"]
-        self.duration = movie_data["Runtime"]
-        self.writer = movie_data["Writer"]
-        self.director = movie_data["Director"]
-        self.stars = movie_data["Actors"]
-        self.poster_image_url = movie_data["Poster"]
-        self.trailer_youtube_url = trailer_youtube_url
-        
+    def __init__(self, title):
+        self.title = title
+        self.youtube_trailer_link = self.get_youtube_link(title)
+        self.poster_url = self.get_poster_url(title)
+        self.omdb_api_string = self.format_title(title)
 
-    # retrieves movie information from the Open Movie Data Base in JSON format
+#TODO: move the link formatting logic from html_gen to here
+    def get_youtube_link(self, title):
+        movie_data = get_movie_data(title)
+        youtube_link = movie_data["youtube"]
+        return youtube_link
+
+    def get_poster_url(self, title):
+        movie_data = get_movie_data(title)
+        poster_url = movie_data["poster"]
+        return poster_url
+
+    #get information about this title in json format from local file
+    def get_movie_data(self, title):
+        movie_file = open("movie_info.json")
+        movie_data = json.loads(movie_file.read())
+        movie_file.close()
+        return movie_data[title]
+
+
+    #format the title for use in client-side calls to the Open Movie Data Base
     # See: https://www.omdbapi.com/ for more information on the API
-    def get_json(self, request):
-        try:
-            if(DEBUG):
-                raise Exception, 'False network error: Testing local' 
-            url = "http://www.omdbapi.com/?t="+request+"&y=&plot=short&r=json"
-            response = urllib.urlopen(url)
-            movie_data = json.loads(response.read())
+    def format_title(self, title):
+        formatted_title = title_words.lower()
+        title_words = title.split()
+        separator = "+"
+        formatted_title = separator.join(formatted_title)
+        return formatted_title
 
-        except: # Use a local backup file 
-            print("Unable to load " + request +
-                  " from www.omdbapi.com, using local mock data")
-            mock = open("json_mock.json")
-            data = json.loads(mock.read())
-            mock.close()
-            movie_data = data["the+empire+strikes+back"]
-        return movie_data
-            
-    # test
+    # printing function for testing
     def print_info(self):
         print("Title: " + self.title)
-        print("Plot: " + self.movie_plot)
-        print("Rating: "  + self.rating)
-        print("Released: "  + self.release_date)
-        print("Duration: "  + self.duration)
-        print("Written By: "  + self.writer)
-        print("Directed By: "  + self.director)
-        print("Starring: "  + self.stars)       
         print("Poster: "  + self.poster_image_url)
         print("Trailer: " + self.trailer_youtube_url)
-        
+        print("API String: " + self.omdb_api_string)
 
-        
+
+
+
+
+
+            # retrieves movie information from the Open Movie Data Base in JSON format
+            # # See: https://www.omdbapi.com/ for more information on the API
+            # def get_json(self, request):
+            #     try:
+            #         #if(DEBUG):
+            #             #raise Exception, 'False network error: Testing local'
+            #         url = "http://www.omdbapi.com/?t="+request+"&y=&plot=short&r=json"
+            #         response = urllib.urlopen(url)
+            #         movie_data = json.loads(response.read())
+            #
+            #     except: # Use a local backup file
+            #         print("Unable to load " + request +
+            #               " from www.omdbapi.com, using local mock data")
+            #         mock = open("json_mock.json")
+            #         data = json.loads(mock.read())
+            #         mock.close()
+            #         movie_data = data["the+empire+strikes+back"]
+            #     return movie_data
