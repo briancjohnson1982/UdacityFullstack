@@ -1,7 +1,6 @@
 import webbrowser
 import os
-#TODO: remove re import statement once tested
-import re
+
 
 # This file is based on ... TODO: finish heaer comments
 
@@ -16,67 +15,13 @@ main_page_head = '''
     <!-- Bootstrap 3 -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="styles.css" media ="screen">
+    <link rel="stylesheet" href="css/styles.css" media ="screen">
 
 
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="javascript/movie_player_scripts.js"></script>
 
-
-
-    <script type="text/javascript" charset="utf-8">
-        // Pause the video when the modal is closed
-        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
-            // Remove the src so the player itself gets removed, as this is the only
-            // reliable way to ensure the video stops playing in IE
-            $("#trailer-video-container").empty();
-            // keeping things consistent.
-            $(".trailer-title-bar").empty();
-            $("#plot").empty();
-            $("#writer").empty();
-            $("#director").empty();
-            $("#starring").empty();
-
-
-
-        });
-        // Start playing the video whenever the trailer modal is opened
-        $(document).on('click', '.movie-tile', function (event) {
-            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id');
-            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
-
-            var omdbRequestString = $(this).attr('data-omdb-request-string');
-            var omdbUrl = 'http://www.omdbapi.com/?t='+ omdbRequestString +'&y=&plot=short&r=json';
-
-            jsonData = $.getJSON(omdbUrl, function(data){
-                //alert(JSON.stringify(data, null, 4));
-                title = data["Title"];
-                $(".trailer-title-bar").append("<h2>"+title+"</h2>");
-                $("#plot").append(data["Plot"]);
-                $("#writer").append(data["Writer"]);
-                $("#director").append(data["Director"]);
-                $("#starring").append(data["Actors"]);
-
-                $(".lower-trailer-bar").append(data["Rated"] + " " + data["Runtime"] + " " + data["Released"]);
-
-            });
-
-
-
-            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
-              'id': 'trailer-video',
-              'type': 'text-html',
-              'src': sourceUrl,
-              'frameborder': 0
-            }));
-        });
-        // Animate in the movies when the page loads
-        $(document).ready(function () {
-          $('.movie-tile').hide().first().show("fast", function showNext() {
-            $(this).next("div").show("fast", showNext);
-          });
-        });
-    </script>
 </head>
 '''
 
@@ -156,6 +101,7 @@ movie_tile_content = '''
 
 
 def create_movie_tiles_content(movies):
+
     # The HTML content for this section of the page
     content = ''
     for movie in movies:
