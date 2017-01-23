@@ -1,25 +1,39 @@
 import sys
 import urllib
 import json
+import re
 
 class Movie():
 
     def __init__(self, title):
         self.title = title
-        self.youtube_trailer_link = self.get_youtube_link(title)
         self.poster_url = self.get_poster_url(title)
+        self.trailer_youtube_id = self.get_youtube_id(title)
         self.omdb_api_string = self.format_title(title)
 
-#TODO: move the link formatting logic from html_gen to here
-    def get_youtube_link(self, title):
-        movie_data = self.get_movie_data(title)
-        youtube_link = movie_data["youtube"]
-        return youtube_link
-
+    # get poster url from local file
     def get_poster_url(self, title):
         movie_data = self.get_movie_data(title)
         poster_url = movie_data["poster"]
         return poster_url
+
+    # get youtube id from local file
+    def get_youtube_id(self, title):
+        movie_data = self.get_movie_data(title)
+        trailer_youtube_url = movie_data["youtube"]
+        trailer_youtube_id = self.extract_youtube_id(trailer_youtube_url)
+        return trailer_youtube_id
+
+    # moved this here from the main html generation file
+    # Extract the youtube ID from the url
+    def extract_youtube_id(self, trailer_youtube_url):
+        youtube_id_match = re.search(
+            r'(?<=v=)[^&#]+', trailer_youtube_url)
+        youtube_id_match = youtube_id_match or re.search(
+            r'(?<=be/)[^&#]+', trailer_youtube_url)
+        trailer_youtube_id = (youtube_id_match.group(0) if youtube_id_match
+                              else None)
+        return trailer_youtube_id
 
     #get information about this title in json format from local file
     def get_movie_data(self, title):
@@ -27,7 +41,6 @@ class Movie():
         movie_data = json.loads(movie_file.read())
         movie_file.close()
         return movie_data[title]
-
 
     #format the title for use in client-side calls to the Open Movie Data Base
     # See: https://www.omdbapi.com/ for more information on the API
@@ -42,29 +55,5 @@ class Movie():
     def print_info(self):
         print("Title: " + self.title)
         print("Poster: "  + self.poster_url)
-        print("Trailer: " + self.youtube_trailer_link)
+        print("Trailer ID: " + self.trailer_youtube_id)
         print("API String: " + self.omdb_api_string)
-
-
-
-
-
-
-            # retrieves movie information from the Open Movie Data Base in JSON format
-            # # See: https://www.omdbapi.com/ for more information on the API
-            # def get_json(self, request):
-            #     try:
-            #         #if(DEBUG):
-            #             #raise Exception, 'False network error: Testing local'
-            #         url = "http://www.omdbapi.com/?t="+request+"&y=&plot=short&r=json"
-            #         response = urllib.urlopen(url)
-            #         movie_data = json.loads(response.read())
-            #
-            #     except: # Use a local backup file
-            #         print("Unable to load " + request +
-            #               " from www.omdbapi.com, using local mock data")
-            #         mock = open("json_mock.json")
-            #         data = json.loads(mock.read())
-            #         mock.close()
-            #         movie_data = data["the+empire+strikes+back"]
-            #     return movie_data

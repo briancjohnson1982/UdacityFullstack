@@ -1,5 +1,6 @@
 import webbrowser
 import os
+#TODO: remove re import statement once tested
 import re
 
 # This file is based on ... TODO: finish heaer comments
@@ -29,11 +30,39 @@ main_page_head = '''
             // Remove the src so the player itself gets removed, as this is the only
             // reliable way to ensure the video stops playing in IE
             $("#trailer-video-container").empty();
+            // keeping things consistent.
+            $(".trailer-title-bar").empty();
+            $("#plot").empty();
+            $("#writer").empty();
+            $("#director").empty();
+            $("#starring").empty();
+
+
+
         });
         // Start playing the video whenever the trailer modal is opened
         $(document).on('click', '.movie-tile', function (event) {
-            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id');
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+
+            var omdbRequestString = $(this).attr('data-omdb-request-string');
+            var omdbUrl = 'http://www.omdbapi.com/?t='+ omdbRequestString +'&y=&plot=short&r=json';
+
+            jsonData = $.getJSON(omdbUrl, function(data){
+                //alert(JSON.stringify(data, null, 4));
+                title = data["Title"];
+                $(".trailer-title-bar").append("<h2>"+title+"</h2>");
+                $("#plot").append(data["Plot"]);
+                $("#writer").append(data["Writer"]);
+                $("#director").append(data["Director"]);
+                $("#starring").append(data["Actors"]);
+
+                $(".lower-trailer-bar").append(data["Rated"] + " " + data["Runtime"] + " " + data["Released"]);
+
+            });
+
+
+
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
               'id': 'trailer-video',
               'type': 'text-html',
@@ -55,23 +84,48 @@ main_page_head = '''
 # The main page layout and title bar
 main_page_content = '''
   <body>
-    <!-- Trailer Video Modal -->
 
+    <!-- Trailer Video Modal -->
     <div class="modal" id="trailer">
       <div class="modal-dialog">
         <div class="modal-content">
-          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
-            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
-          </a>
-          <div class="scale-media" id="trailer-video-container">
-          </div>
+            <div class="left-column col-lg-4">
+                <div class="trailer-title-bar">
+                    <h2></h2>
+                </div>
+                <div class="trailer-side-bar">
 
+                    <div id="plot-summary">
+                        <h3>Plot Summary:</h3>
+                        <div id="plot">
+                        </div>
+                    </div>
+                    <hr>
+                    <div id="people">
+                        <h3>People:</h3>
+
+                        <span><h4>Writen By:</h4><span id="writer"></span></span>
+                        <span><h4>Directed By:</h4><span id="director"></span></span>
+                        <span><h4>Starring:</h4><span id="starring"></span></span>
+                    </div>
+                </div>
+            </div> <!-- END SIDE COLUMN -->
+            <div class="right-column col-lg-8">
+                  <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
+                    <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+                  </a>
+                  <div class="scale-media" id="trailer-video-container">
+                  </div>
+                  <div class="lower-trailer-bar">
+                      <h3>lowerBar</h3>
+                  </div>
+
+            </div> <!-- END RIGHT COLUMN -->
         </div>
       </div>
-      <div class="info-wrapper">
-      Testing
-      </div>
-    </div>
+    </div>  <!-- END VIDEO CONTAINER-->
+
+
 
 
     <!-- Main Page Content -->
@@ -94,7 +148,7 @@ main_page_content = '''
 
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-omdb-request-string ="{omdb_request_string}" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
     <img src="{poster_image_url}" class="poster">
     <h2>{movie_title}</h2>
 </div>
@@ -105,20 +159,15 @@ def create_movie_tiles_content(movies):
     # The HTML content for this section of the page
     content = ''
     for movie in movies:
-        # Extract the youtube ID from the url
-        youtube_id_match = re.search(
-            r'(?<=v=)[^&#]+', movie.trailer_youtube_url)
-        youtube_id_match = youtube_id_match or re.search(
-            r'(?<=be/)[^&#]+', movie.trailer_youtube_url)
-        trailer_youtube_id = (youtube_id_match.group(0) if youtube_id_match
-                              else None)
 
         # Append the tile for the movie with its content filled in
         content += movie_tile_content.format(
             movie_title=movie.title,
-            poster_image_url=movie.poster_image_url,
-            trailer_youtube_id=trailer_youtube_id
+            poster_image_url=movie.poster_url,
+            omdb_request_string=movie.omdb_string,
+            trailer_youtube_id= movie.trailer_youtube_id
         )
+
     return content
 
 
