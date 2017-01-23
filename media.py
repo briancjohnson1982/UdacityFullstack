@@ -12,12 +12,12 @@ class Movie():
 
 #TODO: move the link formatting logic from html_gen to here
     def get_youtube_link(self, title):
-        movie_data = get_movie_data(title)
+        movie_data = self.get_movie_data(title)
         youtube_link = movie_data["youtube"]
         return youtube_link
 
     def get_poster_url(self, title):
-        movie_data = get_movie_data(title)
+        movie_data = self.get_movie_data(title)
         poster_url = movie_data["poster"]
         return poster_url
 
@@ -32,17 +32,17 @@ class Movie():
     #format the title for use in client-side calls to the Open Movie Data Base
     # See: https://www.omdbapi.com/ for more information on the API
     def format_title(self, title):
-        formatted_title = title_words.lower()
-        title_words = title.split()
+        formatted_title = title.lower()
+        title_words = formatted_title.split()
         separator = "+"
-        formatted_title = separator.join(formatted_title)
+        formatted_title = separator.join(title_words)
         return formatted_title
 
     # printing function for testing
     def print_info(self):
         print("Title: " + self.title)
-        print("Poster: "  + self.poster_image_url)
-        print("Trailer: " + self.trailer_youtube_url)
+        print("Poster: "  + self.poster_url)
+        print("Trailer: " + self.youtube_trailer_link)
         print("API String: " + self.omdb_api_string)
 
 
