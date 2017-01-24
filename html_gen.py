@@ -34,35 +34,43 @@ main_page_content = '''
     <div class="modal" id="trailer">
       <div class="modal-dialog">
         <div class="modal-content">
-            <div class="left-column col-lg-4">
+            <div class="left-column">
                 <div class="trailer-title-bar">
                     <h2></h2>
                 </div>
                 <div class="trailer-side-bar">
-
                     <div id="plot-summary">
                         <h3>Plot Summary:</h3>
                         <div id="plot">
                         </div>
                     </div>
                     <hr>
-                    <div id="people">
-                        <h3>People:</h3>
-
-                        <span><h4>Writen By:</h4><span id="writer"></span></span>
+                    <div id="movie-info">
+                        <span><h4>Written By:</h4><span id="writer"></span></span>
+                        <br><br>
                         <span><h4>Directed By:</h4><span id="director"></span></span>
+                        <br><br>
                         <span><h4>Starring:</h4><span id="starring"></span></span>
+                        <hr><br>
+                        <span><h4 class="inline-info">Released:</h4><span id="released"></span></span>
                     </div>
                 </div>
             </div> <!-- END SIDE COLUMN -->
-            <div class="right-column col-lg-8">
+            <div class="right-column">
                   <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
                     <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
                   </a>
                   <div class="scale-media" id="trailer-video-container">
                   </div>
                   <div class="lower-trailer-bar">
-                      <h3>lowerBar</h3>
+                      <span>
+                      <h4 class="inline-info">Rated:</h4>
+                      <strong><span id="rating"></span></strong>
+                      <sup><a href="#" id="ratingTooltip" data-toggle="tooltip" data-placement="right"
+                      title="" class="glyphicon glyphicon-question-sign">
+                      </a></sup>
+                      &nbsp;&nbsp;<span> <h4 class="inline-info">Duration:</h4><span id="duration"></span></span>
+
                   </div>
 
             </div> <!-- END RIGHT COLUMN -->
@@ -73,12 +81,13 @@ main_page_content = '''
 
 
 
+
     <!-- Main Page Content -->
-    <div class="container">
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container main">
+      <div class="navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">My Movies</a>
+            <a class="navbar-brand" href="#"><img class="logo" src="images/logo.png" alt="site logo"></a>
           </div>
         </div>
       </div>
@@ -93,15 +102,15 @@ main_page_content = '''
 
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-omdb-request-string ="{omdb_api_string}" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+<div class="movie-tile text-center" data-omdb-request-string ="{omdb_api_string}" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
     <div class="movie-title">
         <h2>{movie_title}</h2>
     </div>
-    <hr>
+    <hr class"hover-marker">
     <div class="poster-image">
         <img src="{poster_image_url}">
     </div>
-    
+
 </div>
 
 '''
