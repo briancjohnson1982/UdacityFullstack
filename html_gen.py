@@ -35,6 +35,7 @@ main_page_content = '''
 
     <!-- Trailer Video Modal -->
     <div class="modal" id="trailer">
+    <div class="modal-backdrop">
       <div class="modal-dialog">
         <div class="modal-content">
             <div class="left-column">
@@ -79,6 +80,7 @@ main_page_content = '''
 
             </div> <!-- END RIGHT COLUMN -->
         </div>
+      </div>
       </div>
     </div>  <!-- END VIDEO CONTAINER-->
 
