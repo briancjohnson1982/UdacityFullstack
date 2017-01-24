@@ -7,6 +7,7 @@ html, body {
 body {
     padding-top: 80px;
     font-size: 16px;
+    font-family: 'Averia Serif Libre', cursive;
     color: #444;
 }
 img {
@@ -23,8 +24,9 @@ body {
 .logo {
   position: absolute;
   top: 0;
-  left:0;
-  width: 100px;
+  left:30px;
+  height: 100px;
+
 }
 .navbar-fixed-top {
   background: linear-gradient(to bottom, #555555, #111111, #000000);
@@ -34,43 +36,58 @@ body {
 
 
 .flex-container {
-  width:100%;
+  width:90%;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  flex-basis: 33%;
-  justify-content: space-around;
+
+  justify-content: center;
 }
 
 
 .movie-tile {
-    margin: 10px;
-    margin-top: 0;
-    min-width: 300px;
-    width: 30%;
-    height: 40%;
+    margin:20px;
+    margin-top: 10px;
+    padding: 20px;
 
+    min-width: 300px;
+    max-width: 400px;
+
+    flex-basis: 30%;
+    flex-grow: 1;
+
+    background-image: radial-gradient( rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.0));
 }
 
 .movie-title {
   width: 100%;
   text-align: center;
   font-size: 1.8em;
+  font-family: 'Averia Serif Libre', cursive;
 }
 
 
 .movie-tile:hover {
-    font-style: italic;
-    background-color: rgba(240, 240, 240, 0.3);
+
+    background-color: rgba(255, 255, 255, 0.3);
     cursor: pointer;
 
 }
-
+.movie-tile:hover h2{
+  font-weight: 550;
+}
 
 /* keep longer titles from dropping down to the next line */
 @media screen and (max-width: 1280px) {
   .movie-tile h2 {
     font-size: 0.9em;
   }
+}
+  @media screen and (max-width: 860px) {
+    .movie-tile h2 {
+      font-size: 0.8em;
+
+    }
 }
 
 
@@ -130,9 +147,11 @@ body {
 
 
 
-.trailer-side-bar {
-
-  overflow: auto;
+.trailer-title-bar {
+  margin-bottom: 20px;;
+}
+.trailer-title-bar h2 {
+   font-weight: bold;
 }
 
 .lower-trailer-bar {
@@ -148,16 +167,20 @@ body {
   width:40%;
   height: 90%;
   padding: 20px;
+  overflow-x: auto;
+
 }
 .right-column {
     width:60%;
     height:90%;
   padding: 20px;
+
 }
 
 .inline-info {
   display: inline;
-    margin-right: 5px;
+  font-weight: bold;
+  margin-right: 5px;
 }
 .tooltip-content{
   padding: 5px;
@@ -169,5 +192,5 @@ body {
   color: #aaa;
 }
 .movie-info h4 {
-  font-weight: bold;
+  font-weight: 550;
 }

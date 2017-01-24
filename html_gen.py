@@ -17,7 +17,10 @@ main_page_head = '''
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/styles.css" media ="screen">
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre" rel="stylesheet">
 
+    <!-- Scripts -->
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script src="javascript/movie_player_scripts.js"></script>
@@ -37,21 +40,22 @@ main_page_content = '''
             <div class="left-column">
                 <div class="trailer-title-bar">
                     <h2></h2>
+
                 </div>
                 <div class="trailer-side-bar">
                     <div id="plot-summary">
-                        <h3>Plot Summary:</h3>
-                        <div id="plot">
-                        </div>
+                        <h4 class="inline-info">Plot Summary:</h4>
+                        <span id="plot">
+                        </span>
                     </div>
                     <hr>
                     <div id="movie-info">
-                        <span><h4>Written By:</h4><span id="writer"></span></span>
+                        <span><h4 class="inline-info">Written By:</h4><span id="writer"></span></span>
                         <br><br>
-                        <span><h4>Directed By:</h4><span id="director"></span></span>
+                        <span><h4 class="inline-info">Directed By:</h4><span id="director"></span></span>
                         <br><br>
-                        <span><h4>Starring:</h4><span id="starring"></span></span>
-                        <hr><br>
+                        <span><h4 class="inline-info">Starring:</h4><span id="starring"></span></span>
+                        <hr>
                         <span><h4 class="inline-info">Released:</h4><span id="released"></span></span>
                     </div>
                 </div>
@@ -106,7 +110,7 @@ movie_tile_content = '''
     <div class="movie-title">
         <h2>{movie_title}</h2>
     </div>
-    <hr class"hover-marker">
+
     <div class="poster-image">
         <img src="{poster_image_url}">
     </div>
