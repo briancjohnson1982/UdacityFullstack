@@ -33,7 +33,7 @@ $(document).on('click', '.movie-tile', function (event) {
         $("#writer").append(data["Writer"]);
         $("#director").append(data["Director"]);
         $("#starring").append(data["Actors"]);
-        $("#released").append(data["Released"]);
+        $("#released").append(formatDate(data["Released"]));
         $("#rating").append(data["Rated"]);
         $("#duration").append(data["Runtime"]);
 
@@ -47,6 +47,15 @@ $(document).on('click', '.movie-tile', function (event) {
       'frameborder': 0
     }));
 });
+
+
+//format the date to American convention from OMDb format
+function formatDate(omdbDate) {
+  var date = omdbDate;
+  var dateParts = date.split(" ");
+  date = dateParts[1]+". " + dateParts[0] + ", " + dateParts[2];
+  return date;
+}
 
 // request JSON from OMBd and add to html
 // Animate in the movies when the page loads
