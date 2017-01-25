@@ -22,6 +22,8 @@ The easiest way to run this program is via the command line.
  
  `$ python entertainment_center.py`
 
+### Demo:
+If can access a live version of this site here: [Demo](http://udacity-project-my-movies.s3-website-us-west-2.amazonaws.com/)
 ### Contributors:
 
 Brian Johnson
