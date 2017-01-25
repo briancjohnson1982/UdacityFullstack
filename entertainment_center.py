@@ -12,7 +12,7 @@ import html_gen
 
 movie_titles = ["The Empire Strikes Back", "The Godfather",
                 "The Princess Bride", "Casablanca", "Dead Poets Society",
-                "Akira", "Office Space","The Matrix", "Fight Club"]
+                "Akira", "Office Space", "The Matrix", "Fight Club"]
 
 # Create an array of movie objects
 movies = []

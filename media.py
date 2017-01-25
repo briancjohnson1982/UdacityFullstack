@@ -72,6 +72,6 @@ class Movie():
     def print_info(self):
         """Print the object's member variables values"""
         print("Title: " + self.title)
-        print("Poster: "  + self.poster_url)
+        print("Poster: " + self.poster_url)
         print("Trailer ID: " + self.trailer_youtube_id)
         print("API String: " + self.omdb_api_string)

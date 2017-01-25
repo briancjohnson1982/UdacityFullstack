@@ -159,7 +159,7 @@ def create_movie_tiles_content(movies):
             movie_title=movie.title,
             poster_image_url=movie.poster_url,
             omdb_api_string=movie.omdb_api_string,
-            trailer_youtube_id= movie.trailer_youtube_id
+            trailer_youtube_id=movie.trailer_youtube_id
         )
 
     return content
