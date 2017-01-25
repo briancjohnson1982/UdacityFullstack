@@ -15,9 +15,11 @@ https://github.com/adarsh0806/ud036_StarterCode/blob/master/fresh_tomatoes.py
 
 ### Run:
 The easiest way to run this program is via the command line.
-1. Fork or download this repository.
-2. Navigate to your download directory (uncompress if necessary).
-3. Use the python command to run entertainment_center.py:
+
+  1. Fork or download this repository.
+  2. Navigate to your download directory (uncompress if necessary).
+  3. Use the python command to run entertainment_center.py:
+ 
  `$ python entertainment_center.py`
 
 ### Contributors:
