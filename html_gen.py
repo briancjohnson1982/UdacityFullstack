@@ -1,7 +1,7 @@
-import webbrowser
+"""Create and open html page in default browser"""
+
 import os
-
-
+import webbrowser
 
 main_page_head = '''
 <!DOCTYPE html>
